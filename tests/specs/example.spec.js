@@ -5,7 +5,7 @@ const { test, expect } = require('@playwright/test')
 
 test.describe('Login tests', () => {
 
-    test.skip('Should login successfully with valid credentials', async ({ page }) => {
+    test('Should login successfully with valid credentials', async ({ page }) => {
 
         await page.goto('https://practicesoftwaretesting.com/auth/login');
         await page.locator('[data-test="email"]').fill('customer2@practicesoftwaretesting.com');
@@ -15,7 +15,7 @@ test.describe('Login tests', () => {
 
     })
 
-    test.skip('Should login un-successfully with invalid password', async ({ page }) => {
+    test('Should login un-successfully with invalid password', async ({ page }) => {
 
         await page.goto('https://practicesoftwaretesting.com/auth/login');
         await page.locator('[data-test="email"]').fill('customer2@practicesoftwaretesting.com');
@@ -28,7 +28,7 @@ test.describe('Login tests', () => {
 
 })
 
-test.skip("Sort products from High to Low", async ({ page }) => {
+test("Sort products from High to Low", async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com')
     await page.locator('[data-test="sort"]').selectOption('price,desc');
     // wait for fix, wait for all items to be not hidden, fix it like that
