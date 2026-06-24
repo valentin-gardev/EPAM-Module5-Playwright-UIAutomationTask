@@ -4,7 +4,7 @@ const test = base.extend({
 
     loginPage: async ({ page }, use) => {
 
-        await page.goto('https://practicesoftwaretesting.com/auth/login');
+        await page.goto();
         await use(page);
     },
 
