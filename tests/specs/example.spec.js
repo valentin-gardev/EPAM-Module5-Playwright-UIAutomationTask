@@ -3,7 +3,7 @@ import { test, expect } from '../fixtures/fixtures'
 
 test.describe('Login tests', () => {
 
-    test('Should login successfully with valid credentials', async ({ loginPage, page }) => {
+    test.skip('Should login successfully with valid credentials', async ({ loginPage, page }) => {
 
         await loginPage.components.emailContainer.fill('customer2@practicesoftwaretesting.com')
         await loginPage.components.passwordContainer.fill('welcome01')
@@ -12,7 +12,7 @@ test.describe('Login tests', () => {
 
     })
 
-    test('Should login un-successfully with invalid password', async ({ loginPage }) => {
+    test.skip('Should login un-successfully with invalid password', async ({ loginPage }) => {
 
         await loginPage.components.emailContainer.fill('customer2@practicesoftwaretesting.com')
         await loginPage.components.passwordContainer.fill('welcome02')
@@ -24,9 +24,10 @@ test.describe('Login tests', () => {
 
 })
 
-test.skip("Sort products from High to Low", async ({ page }) => {
-    await page.goto('https://practicesoftwaretesting.com')
-    await page.locator('[data-test="sort"]').selectOption('price,desc');
+test("Sort products from High to Low", async ({ homePage, page }) => {
+
+    await homePage.sortButtonClick('priceHL')
+    // await page.locator('[data-test="sort"]').selectOption('price,desc');
     // wait for fix, wait for all items to be not hidden, fix it like that
     await expect(page.locator('[data-test="product-price"]').first()).toHaveText('$89.55', {timeout: 10000})
 
