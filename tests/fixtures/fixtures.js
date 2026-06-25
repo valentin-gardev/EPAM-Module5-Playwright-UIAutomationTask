@@ -1,11 +1,13 @@
-const { test: base} = require('@playwright/test')
+import { test as base} from '@playwright/test'
+import LoginPage from '../pageObjects/pages/login.page';
 
-const test = base.extend({
+
+export const test = base.extend({
 
     loginPage: async ({ page }, use) => {
-
-        await page.goto();
-        await use(page);
+        const login = new LoginPage(page)
+        await login.open()
+        await use(login);
     },
 
     homePage: async ({ page }, use) => {
@@ -13,3 +15,5 @@ const test = base.extend({
         await use(page);
     }
 });
+
+export { expect } from '@playwright/test'

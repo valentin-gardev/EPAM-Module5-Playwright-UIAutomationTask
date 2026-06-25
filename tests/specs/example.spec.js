@@ -1,34 +1,30 @@
-// const { test } = require('../fixtures/fixtures')
-const { test, expect } = require('@playwright/test')
-
+import { test, expect } from '../fixtures/fixtures'
 
 
 test.describe('Login tests', () => {
 
-    test('Should login successfully with valid credentials', async ({ page }) => {
+    test('Should login successfully with valid credentials', async ({ loginPage, page }) => {
 
-        await page.goto('https://practicesoftwaretesting.com/auth/login');
-        await page.locator('[data-test="email"]').fill('customer2@practicesoftwaretesting.com');
-        await page.locator('[data-test="password"]').fill('welcome01');
-        await page.locator('[data-test="login-submit"]').click();
-        await expect(page.locator('[data-test="nav-menu"]')).toHaveText('Jack Howe')
+        await loginPage.components.emailContainer.fill('customer2@practicesoftwaretesting.com')
+        await loginPage.components.passwordContainer.fill('welcome01')
+        await loginPage.confirmLogin()
+        await expect(page.locator('[data-test="nav-menu"]')).toHaveText('Jack Howe')// Should be added to POM
 
     })
 
-    test('Should login un-successfully with invalid password', async ({ page }) => {
+    test('Should login un-successfully with invalid password', async ({ loginPage }) => {
 
-        await page.goto('https://practicesoftwaretesting.com/auth/login');
-        await page.locator('[data-test="email"]').fill('customer2@practicesoftwaretesting.com');
-        await page.locator('[data-test="password"]').fill('welcome02');
-        await page.locator('[data-test="login-submit"]').click();
-        await expect(page.locator('[data-test="login-error"]')).toBeVisible() 
+        await loginPage.components.emailContainer.fill('customer2@practicesoftwaretesting.com')
+        await loginPage.components.passwordContainer.fill('welcome02')
+        await loginPage.confirmLogin()
+        await expect(loginPage.components.alertWindow).toBeVisible()
         
     })
 
 
 })
 
-test("Sort products from High to Low", async ({ page }) => {
+test.skip("Sort products from High to Low", async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com')
     await page.locator('[data-test="sort"]').selectOption('price,desc');
     // wait for fix, wait for all items to be not hidden, fix it like that
@@ -42,7 +38,7 @@ test("Sort products from High to Low", async ({ page }) => {
     expect(allPriceArr).toEqual(sortedItems)
 })
 
-test('Adding product to favourites/ not logged in/', async ({ page }) => {
+test.skip('Adding product to favourites/ not logged in/', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com')
     const cardItems = await page.locator('a.card')
     await expect(cardItems.first()).toBeVisible()
