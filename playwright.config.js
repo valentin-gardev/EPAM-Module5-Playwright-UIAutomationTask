@@ -1,17 +1,24 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
+const dotenv = require('dotenv');
+const path = require('path');
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-/**
- * @see https://playwright.dev/docs/test-configuration
- */
+const rpConfig = {
+  apiKey: process.env.RP_API_KEY,                 // Loaded from your .env file
+  endpoint: 'https://reportportal.epam.com/api/v2', // Your ReportPortal instance API endpoint
+  project: 'valentin_gardev_personal',                 // Must match your exact project namespace (case-sensitive)
+  launch: 'Playwright JS Test Launch',          // The execution name displayed on your dashboard
+  description: 'JavaScript E2E Automated regression run',
+  attributes: [
+    { key: 'env', value: 'staging' },
+    { value: 'javascript' }
+  ],
+  uploadVideo: true,                            // Automatically uploads Playwright videos to ReportPortal on failure
+  uploadTrace: true,                            // Automatically uploads Playwright trace files to ReportPortal on failure
+};
+
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
@@ -23,7 +30,11 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: 2,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['list', {printSteps: true}],
+    ['html', {open: 'on-failure', outputFolder: 'playwright-report'}],
+    ['@reportportal/agent-js-playwright', rpConfig]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     headless: true,
