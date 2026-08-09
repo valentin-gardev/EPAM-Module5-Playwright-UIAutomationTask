@@ -1,0 +1,37 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# "root = true" tells the EditorConfig plugin to stop looking up the folder tree
+# for other config files. This is the top-level configuration.
+root = true
+
+# This rule applies to EVERY file in the project (*)
+[*]
+# Use Unix-style line endings (Line Feed) instead of Windows-style (Carriage Return + Line Feed).
+# This prevents annoying git merge conflicts if devs are on both Windows and Mac/Linux.
+end_of_line = lf
+
+# Ensure there is always exactly one empty line at the very end of every file.
+# This is a standard POSIX rule (many command line tools fail to read the last line if it doesn't end in a newline).
+insert_final_newline = true
+
+# Automatically delete any trailing spaces/tabs at the end of lines when saving.
+# No one needs invisible spaces hanging off the end of their code!
+trim_trailing_whitespace = true
+
+# Set the character encoding of files to UTF-8 (the modern standard for web code).
+charset = utf-8
+
+
+# This rule applies ONLY to JavaScript, TypeScript, JSON, HTML, and CSS files
+[*.{js,jsx,ts,tsx,json,html,css}]
+# Use spaces instead of actual keyboard tabs for indentation.
+indent_style = space
+# Make 1 indent (tab press) equivalent to exactly 2 spaces.
+indent_size = 2
+
+
+# This rule applies ONLY to Markdown files (*.md)
+[*.md]
+# Sometimes trailing spaces in markdown represent a line break (<br>),
+# so we override the global rule and allow trailing spaces here.
+trim_trailing_whitespace = false
